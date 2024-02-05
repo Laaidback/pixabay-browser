@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @Composable
 fun <T> ObserveEvents(flow: Flow<T>, onEvent: (T) -> Unit) {
@@ -26,6 +27,6 @@ fun <T> ObserveEvents(flow: Flow<T>, onEvent: (T) -> Unit) {
 fun <T> Flow<T>.asResult(): Flow<Result<T>> = this
     .map { Result.success(it) }
     .catch {
-        println(it)
+        Timber.e(it)
         emit(Result.failure(it))
     }

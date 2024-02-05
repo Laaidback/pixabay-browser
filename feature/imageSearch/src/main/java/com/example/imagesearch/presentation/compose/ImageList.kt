@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.core.compose.TagList
+import com.example.core.presentation.compose.TagList
 import com.example.imagesearch.R
 import com.example.imagesearch.presentation.ImageSearchResultModel
 

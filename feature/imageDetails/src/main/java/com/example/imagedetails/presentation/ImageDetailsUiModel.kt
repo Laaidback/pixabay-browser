@@ -1,6 +1,7 @@
 package com.example.imagedetails.presentation
 
 import androidx.compose.runtime.Immutable
+import com.example.core.presentation.model.ChipModel
 
 sealed class ImageDetailsUiModel {
 
@@ -13,7 +14,7 @@ sealed class ImageDetailsUiModel {
 data class ImageDetails(
     val userName: String,
     val imageUrl: String,
-    val tags: List<String>,
+    val tags: List<ChipModel>,
     val likesCount: Int,
     val downloadsCount: Int,
     val commentsCount: Int,

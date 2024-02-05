@@ -18,7 +18,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.core.compose.TagList
+import com.example.core.presentation.compose.TagList
+import com.example.core.presentation.model.ChipModel
 import com.example.imagedetails.presentation.ImageDetails
 import com.example.imagedetails.presentation.ImageDetailsUiModel
 
@@ -84,7 +85,10 @@ private class ImageDetailsUiModelPreview : PreviewParameterProvider<ImageDetails
                 imageDetails = ImageDetails(
                     userName = "userName",
                     imageUrl = "https://pixabay.com/get/ga5941c9723f9062629e4bd0e198ba7849d413df75dc5a22c79ad49c29bce958b75394eb0d9e2240dd782e3f0850dabff7489c8564bfc1e3ed497d65094990f02_1280.jpg",
-                    tags = listOf("userName", "asd"),
+                    tags = listOf(
+                        ChipModel("userName", {}),
+                        ChipModel("asd", {}),
+                    ),
                     likesCount = 111,
                     downloadsCount = 222,
                     commentsCount = 1231231231,

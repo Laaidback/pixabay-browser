@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-
 class SearchImagesUseCase @Inject constructor(
     private val imageRepository: ImageRepository
 ) {

@@ -1,9 +1,11 @@
 package com.example.imagesearch.presentation
 
+import com.example.core.presentation.model.ChipModel
+import com.example.core.presentation.model.DialogModel
+import com.example.core.presentation.model.InputModel
 
 data class ImageSearchUiModel(
-    val searchInput: String,
-    val onInputChange: (String) -> Unit,
+    val searchInput: InputModel,
     val contentResult: ContentResult,
     val dialogModel: DialogModel?
 )
@@ -25,10 +27,6 @@ data class ImageSearchResultModel(
     val id: String,
     val userName: String,
     val imageUrl: String,
-    val tags: List<String>,
+    val tags: List<ChipModel>,
     val onClick: () -> Unit,
-)
-data class DialogModel(
-    val onDismiss: () -> Unit,
-    val onConfirm: () -> Unit,
 )

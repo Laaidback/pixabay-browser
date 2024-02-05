@@ -5,13 +5,18 @@ package com.example.imagesearch.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.coroutines.CoroutineContextOwner
+import com.example.core.presentation.model.DialogModel
+import com.example.core.presentation.model.InputModel
 import com.example.imagedatasource.domain.model.Image
 import com.example.imagesearch.domain.SearchImagesUseCase
 import com.example.imagesearch.presentation.mapper.ImageUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
@@ -41,8 +46,10 @@ class ImageSearchViewModel @Inject constructor(
 
     private val initialState: ImageSearchUiModel
         get() = ImageSearchUiModel(
-            searchInput = INITIAL_SEARCH_INPUT,
-            onInputChange = ::onNewInput,
+            searchInput = InputModel(
+                value = INITIAL_SEARCH_INPUT,
+                onInputChange = ::onNewInput
+            ),
             contentResult = ContentResult.Loading,
             dialogModel = null,
         )
@@ -50,7 +57,7 @@ class ImageSearchViewModel @Inject constructor(
     init {
         viewModelScope.launch(ioCoroutineContext) {
             uiModel
-                .map { uiModel -> uiModel.searchInput }
+                .map { uiModel -> uiModel.searchInput.value }
                 .distinctUntilChanged()
                 .onEach(::updateContentResultFromInput)
                 .filter(CharSequence::isNotBlank)
@@ -70,7 +77,8 @@ class ImageSearchViewModel @Inject constructor(
                 val uiItems = imageList.map { imageModel ->
                     imageUiMapper.mapToUI(
                         domainObject = imageModel,
-                        onItemClick = ::onItemClick
+                        onItemClick = ::onItemClick,
+                        onChipClick = ::onNewInput,
                     )
                 }
                 ContentResult.Success(uiItems)
@@ -92,7 +100,7 @@ class ImageSearchViewModel @Inject constructor(
     }
 
     private fun onNewInput(newInput: String) {
-        _uiModel.update { it.copy(searchInput = newInput) }
+        _uiModel.update { it.copy(searchInput = it.searchInput.withNewInput(newInput)) }
     }
 
     private fun setContentResult(contentResult: ContentResult) {
