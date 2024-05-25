@@ -6,6 +6,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
+import com.example.core.presentation.model.ChipModel
+import com.example.core.presentation.model.InputModel
 import com.example.imagesearch.R
 import com.example.imagesearch.presentation.ContentResult
 import com.example.imagesearch.presentation.ImageSearchResultModel
@@ -22,8 +24,10 @@ class ImageSearchScreenTest {
     fun imageSearchScreen_shouldPresentSearchField() {
         // Given
         val mockModel = ImageSearchUiModel(
-            searchInput = "searchInput",
-            onInputChange = {},
+            searchInput = InputModel(
+                value = "searchInput",
+                onInputChange = {},
+            ),
             contentResult = ContentResult.Loading,
             dialogModel = null,
         )
@@ -52,20 +56,28 @@ class ImageSearchScreenTest {
                 id = "id1",
                 userName = "userName",
                 imageUrl = "https://cdn.pixabay.com/photo/2017/05/13/17/31/fruit-2310212_150.jpg",
-                tags = listOf("userName", "tags"),
+                tags = listOf(
+                    ChipModel("userName") {},
+                    ChipModel("tags") {},
+                ),
                 onClick = {},
             ),
             ImageSearchResultModel(
                 id = "id2",
                 userName = "userName2",
                 imageUrl = "https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_150.jpg",
-                tags = listOf("userName, tags, 2"),
+                tags = listOf(
+                    ChipModel("userName") {},
+                    ChipModel("tags") {},
+                    ChipModel("2") {}),
                 onClick = {},
             ),
         )
         val mockModel = ImageSearchUiModel(
-            searchInput = "searchInput",
-            onInputChange = {},
+            searchInput = InputModel(
+                value = "searchInput",
+                onInputChange = {},
+            ),
             contentResult = ContentResult.Success(items),
             dialogModel = null,
         )

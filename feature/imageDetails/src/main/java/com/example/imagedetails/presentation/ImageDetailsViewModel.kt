@@ -29,7 +29,7 @@ class ImageDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getImageDetailsUseCase.execute(extractImageId(savedStateHandle))
+            getImageDetailsUseCase.execute(imageId = extractImageId(savedStateHandle))
                 .let(uiMapper::mapToUI)
                 .let(ImageDetailsUiModel::ImageLoaded)
                 .let { _uiModel.emit(it) }
